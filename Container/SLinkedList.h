@@ -53,6 +53,8 @@ public:
 
 	SListIterator<T> GetIterator();
 	void Insert(SListIterator<T>& it, T new_data);
+	void GetSubList(SListIterator<T>& it, SLinkedList<T>& list);
+	void Remove(SListIterator<T>& it);
 public:
 	SListNode<T>* m_head;
 	SListNode<T>* m_tail;
@@ -80,6 +82,7 @@ SLinkedList<T>::~SLinkedList()
 		next = it->m_next;
 		delete it;
 		it = next;
+		m_count -= 1;
 	}
 }
 
@@ -88,6 +91,7 @@ void SLinkedList<T>::Init(T new_data)
 {
 	SListNode<T>* first_node = new SListNode<T>;
 	first_node->m_data = new_data;
+	first_node->m_next = 0;
 	m_head = first_node;
 	m_tail = first_node;
 }
@@ -116,6 +120,7 @@ void SLinkedList<T>::Append(T new_data)
 	{
 		m_tail->InsertAfter(new_data);
 		m_tail = m_tail->m_next;
+		m_tail->m_next = 0;	//	Must put to null
 	}
 	m_count += 1;
 }
@@ -183,7 +188,7 @@ void SLinkedList<T>::RemoveTail()
 	}
 	//	List with more than one nodes
 	SListNode<T>* temp_node = 0;
-	for (temp_node = head; ;)
+	for (temp_node = m_head; ;)
 	{
 		if (temp_node->m_next == m_tail)
 		{
@@ -192,8 +197,10 @@ void SLinkedList<T>::RemoveTail()
 			delete temp_node->m_next;
 			temp_node->m_next = 0;
 			m_tail = temp_node;
+			m_count -= 1;
 			break;
 		}
+		temp_node = temp_node->m_next;
 	}
 }
 
@@ -212,7 +219,73 @@ void SLinkedList<T>::Insert(SListIterator<T>& it, T new_data)
 	if (it.m_node != 0)
 	{
 		it.m_node->InsertAfter(new_data);
+		if (it.m_node == m_tail)
+		{
+			//	If we inserted after m_tail
+			//	Then we need to update m_tail
+			m_tail = it.m_node->m_next;
+		}
 	}
+	else
+	{
+		//	There is no element in the Linked List
+		Init(new_data);
+	}
+	m_count += 1;
+}
+
+template<class T>
+void SLinkedList<T>::GetSubList(SListIterator<T>& it, SLinkedList<T>& list)
+{
+	//	Returns a Linked List beginning from it
+	if (it.m_node == 0)
+		return;
+
+	//	Only one element
+	if (m_head == m_tail)
+	{
+		list.Init(m_head->m_data);
+	}
+
+	//	More than one elements
+	while (it.m_node != 0)
+	{
+		list.Append(it.m_node->m_data);
+		it.Forth();
+	}
+}
+
+template<class T>
+void SLinkedList<T>::Remove(SListIterator<T>& it)
+{
+	//	If it's invalid then return;
+	if( !it.Valid() )
+		return;
+
+	//	If there is only one element in the Linked List
+	if (m_head == m_tail)
+	{
+		delete m_head;	//	Remove the content
+		m_head = m_tail = 0;
+	}
+	else
+	{
+		// More than one element
+		if (it.m_node == m_head)
+		{
+			RemoveHead();
+			return;	//	RemoveHead already discount m_count
+		}
+		if (it.m_node == m_tail)
+		{
+			RemoveTail();
+			return;	//	RemoveTail already discount m_count
+		}
+
+		// Not head or tail
+
+	}
+	m_count -= 1;
 }
 
 //	Iterator class for Singly Linked List
