@@ -114,9 +114,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DLinkedList.h" />
     <ClInclude Include="SLinkedList.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DLinkedList.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
