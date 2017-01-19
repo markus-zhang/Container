@@ -77,6 +77,7 @@ DListNode<T>::DListNode()
 template<class T>
 DListNode<T>::~DListNode()
 {
+	//std::cout << "Called a destructor" << std::endl;
 	if (m_next != 0)
 	{
 		delete m_next;
@@ -147,8 +148,10 @@ void DLinkedList<T>::Clear()
 			garbage = it.m_node;
 			std::cout << garbage->m_data << std::endl;
 			it.Forth();
+			garbage->m_next = nullptr;
 			std::cout << garbage->m_data << std::endl;
 			delete garbage;
+			it.m_node->m_prev = nullptr;
 			garbage = nullptr;
 			m_count -= 1;
 		}
