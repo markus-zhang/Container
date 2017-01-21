@@ -2,6 +2,7 @@
 #define _DLINKEDLIST_
 
 #include <assert.h>
+#include <functional>
 
 //	Linked List Node Template Class
 
@@ -40,6 +41,7 @@ public:
 	void Append(const T& new_data);
 	void Prepend(const T& new_data);
 	int  Frequency(const T& data);
+	void Collection(std::function<bool(T, T)> func);
 public:
 	DListNode<T>* m_head;
 	DListNode<T>* m_tail;
@@ -248,7 +250,7 @@ int DLinkedList<T>::Frequency(const T& data)
 	if (m_count == 0)
 		return 0;
 	//	At least one element
-	int freq;
+	int freq = 0;
 	DListIterator<T> it = DListIterator<T>(m_head, this);
 	for (it.Init(); it.Valid(); it.Forth())
 	{
@@ -256,6 +258,20 @@ int DLinkedList<T>::Frequency(const T& data)
 			freq += 1;
 	}
 	return freq;
+}
+
+template<class T>
+void DLinkedList<T>::Collection(std::function<bool(T, T)> func)
+{
+	assert(m_count > 0);
+	DListIterator<T> it = GetIterator();
+	for (it.Init(); it.Valid(); it.Forth())
+	{
+		if (func(it.GetData(), 15))
+			std::cout << "Passed" << std::endl;
+		else
+			std::cout << "Did not pass" << std::endl;
+	}
 }
 
 template<class T>

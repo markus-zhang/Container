@@ -8,8 +8,20 @@ int main()
 	DLinkedList<int> test_list;
 	test_list.Append(10);
 	test_list.Append(20);
-	//test_list.Append(30);
-	//test_list.Append(40);
+	test_list.Append(30);
+	test_list.Prepend(10);
+	class func_temp
+	{
+	public:
+		bool operator()(int x, int y)
+		{
+			if (x <= y)
+				return true;
+			return false;
+		}
+	};
+	std::function<bool(int, int)> func = func_temp();
+	test_list.Collection(func);
 	//test_list.Append(50);
 	//test_list.Append(60);
 	//test_list.Append(70);
