@@ -116,6 +116,7 @@
   <ItemGroup>
     <ClInclude Include="DLinkedList.h" />
     <ClInclude Include="SLinkedList.h" />
+    <ClInclude Include="test.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />

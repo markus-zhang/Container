@@ -42,6 +42,8 @@ public:
 	void Prepend(const T& new_data);
 	int  Frequency(const T& data);
 	void Collection(std::function<bool(T, T)> func);
+	template<typename... Args>
+	void RemoveIf(std::function<bool(T t, Args... args)> func, Args... para);
 public:
 	DListNode<T>* m_head;
 	DListNode<T>* m_tail;
@@ -271,6 +273,21 @@ void DLinkedList<T>::Collection(std::function<bool(T, T)> func)
 			std::cout << "Passed" << std::endl;
 		else
 			std::cout << "Did not pass" << std::endl;
+	}
+}
+
+template<class T>
+template<typename... Args>
+void DLinkedList<T>::RemoveIf(std::function<bool(T t, Args... args)> func, Args... para)
+{
+	assert(m_count > 0);
+	DListIterator<T> it = GetIterator();
+	for (it.Init(); it.Valid(); it.Forth())
+	{
+		if (func(it.GetData(), para...))
+			std::cout << "Remove this" << std::endl;
+		else
+			std::cout << "Do not remove this" << std::endl;
 	}
 }
 

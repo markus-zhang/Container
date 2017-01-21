@@ -1,15 +1,32 @@
 #include <iostream>
+#include <string>
 #include "SLinkedList.h"
 #include "DLinkedList.h"
+#include "test.h"
 
 
 int main()
 {
-	DLinkedList<int> test_list;
+	test_manager test_mgr;
+	test test_item1, test_item2, test_item3, test_item4;
+	test_item1.Init("Goblin", 10, 0, 0);
+	test_item2.Init("Orc", 15, 0, 0);
+	test_item3.Init("Goblin", 10, 20, 0);
+	test_item4.Init("Goblin", 10, 0, 0);
+
+	test_mgr.test_list.Append(test_item1);
+	test_mgr.test_list.Append(test_item2);
+	test_mgr.test_list.Append(test_item3);
+
+	test_mgr.Remove(test_item4);
+	
+	
+	/*DLinkedList<int> test_list;
 	test_list.Append(10);
 	test_list.Append(20);
 	test_list.Append(30);
 	test_list.Prepend(10);
+	
 	class func_temp
 	{
 	public:
@@ -21,7 +38,10 @@ int main()
 		}
 	};
 	std::function<bool(int, int)> func = func_temp();
-	test_list.Collection(func);
+	int para = 15;
+	test_list.RemoveIf(func, para);*/
+	
+	
 	//test_list.Append(50);
 	//test_list.Append(60);
 	//test_list.Append(70);
