@@ -44,6 +44,8 @@ public:
 	void Collection(std::function<bool(T, T)> func);
 	template<typename... Args>
 	void RemoveIf(std::function<bool(T t, Args... args)> func, Args... para);
+	template<typename... Args>
+	void CopyIf(std::function<bool(T t, Args... args)> func, Args... para, DLinkedList<T>& list);
 public:
 	DListNode<T>* m_head;
 	DListNode<T>* m_tail;
@@ -288,6 +290,19 @@ void DLinkedList<T>::RemoveIf(std::function<bool(T t, Args... args)> func, Args.
 			std::cout << "Remove this" << std::endl;
 		else
 			std::cout << "Do not remove this" << std::endl;
+	}
+}
+
+template<class T>
+template<typename... Args>
+void DLinkedList<T>::CopyIf(std::function<bool(T t, Args... args)> func, Args... para, DLinkedList<T>& list)
+{
+	assert(m_count > 0);
+	DListIterator<T> it = GetIterator();
+	for (it.Init(); it.Valid(); it.Forth())
+	{
+		if (func(it.GetData(), para...))
+			list.Append(it.GetData());
 	}
 }
 

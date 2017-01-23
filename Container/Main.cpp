@@ -2,23 +2,58 @@
 #include <string>
 #include "SLinkedList.h"
 #include "DLinkedList.h"
+#include "ULinkedList.h"
 #include "test.h"
+#include "SDL.h"
 
 
-int main()
+int main(int argc, char* args[])
 {
+	ULinkedList<int> test_list;
+	test_list.Insert(10);
+	test_list.Insert(20);
+	test_list.Insert(30);
+	test_list.Insert(40);
+	test_list.Insert(50);
+	test_list.Insert(60);
+	test_list.Insert(70);
+	test_list.Insert(10);
+	test_list.Insert(20);
+	test_list.Insert(30);
+	test_list.Insert(40);
+	test_list.Insert(50);
+	test_list.Insert(60);
+	test_list.Insert(70);
+	test_list.Insert(10);
+	test_list.Insert(20);
+	test_list.Insert(30);
+	test_list.Insert(40);
+	test_list.Insert(50);
+	test_list.Insert(60);
+	test_list.Insert(70);
+	test_list.Insert(10);
+	test_list.Insert(20);
+	test_list.Insert(30);
+	test_list.Insert(40);
+	test_list.Insert(50);
+	test_list.Insert(60);
+	test_list.Insert(70);
+
+	
+	/*std::cout << SDL_GetCPUCacheLineSize() << std::endl;
 	test_manager test_mgr;
 	test test_item1, test_item2, test_item3, test_item4;
 	test_item1.Init("Goblin", 10, 0, 0);
 	test_item2.Init("Orc", 15, 0, 0);
 	test_item3.Init("Goblin", 10, 20, 0);
 	test_item4.Init("Goblin", 10, 0, 0);
+	std::cout << sizeof(test_item1) << " " << sizeof(test_item2) << std::endl;
 
 	test_mgr.test_list.Append(test_item1);
 	test_mgr.test_list.Append(test_item2);
 	test_mgr.test_list.Append(test_item3);
 
-	test_mgr.Remove(test_item4);
+	test_mgr.Remove(test_item4);*/
 	
 	
 	/*DLinkedList<int> test_list;
@@ -84,4 +119,5 @@ int main()
 	//{
 	//	std::cout << test_it2.GetData() << " ";
 	//}
+	return 0;
 }
