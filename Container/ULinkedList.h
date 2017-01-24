@@ -16,7 +16,7 @@ public:
 	//	Constrcutors and Destructors
 	UListNode(int nummax);
 	~UListNode();
-	//	UList methods
+	//	UListNode methods
 	void Insert(const T& new_data);
 	T& Find(const T& new_data);
 	bool Maxed();
@@ -152,7 +152,6 @@ void ULinkedList<T>::Insert(const T& new_data)
 	UListIterator<T> it = GetIterator();
 	for (it.Init(); it.Valid(); it.Forth())
 	{
-		std::cout << "Maximum of this node: " << it.m_node->m_numMax << std::endl;
 		//	Insert at first non-Maxed node
 		if (!it.m_node->Maxed())
 		{
@@ -209,7 +208,21 @@ template<class T>
 template<typename... Args>
 void ULinkedList<T>::CopyIf(std::function<bool(T t, Args... args)> func, Args... para, ULinkedList<T>& list)
 {
-
+	assert(m_count > 0);
+	UListIterator<T> it = GetIterator();
+	for (it.Init(); it.Valid(); it.Forth())
+	{
+		//	In each node, search the vector
+		std::vector<T>::iterator v_it;
+		for (v_it = it.GetData().begin(); v_it != it.GetData().end(); v_it++)
+		{
+			if (func(*v_it, para...))
+			{
+				std::cout << *v_it << " is copied" << std::endl;
+				list.Insert(*v_it);
+			}
+		}
+	}
 }
 
 template<class T>

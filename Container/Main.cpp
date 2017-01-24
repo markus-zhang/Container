@@ -31,15 +31,21 @@ int main(int argc, char* args[])
 	test_list.Insert(50);
 	test_list.Insert(60);
 	test_list.Insert(70);
-	test_list.Insert(10);
-	test_list.Insert(20);
-	test_list.Insert(30);
-	test_list.Insert(40);
-	test_list.Insert(50);
-	test_list.Insert(60);
-	test_list.Insert(70);
 
-	
+	ULinkedList<int> test_list_2;
+	class func_temp
+	{
+	public:
+		bool operator()(int x, int y)
+		{
+			if (x <= y)
+				return true;
+			return false;
+		}
+	};
+	std::function<bool(int, int)> func = func_temp();
+	test_list.CopyIf(func, 65, test_list_2);
+
 	/*std::cout << SDL_GetCPUCacheLineSize() << std::endl;
 	test_manager test_mgr;
 	test test_item1, test_item2, test_item3, test_item4;
