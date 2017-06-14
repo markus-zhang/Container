@@ -66,7 +66,8 @@ public:
 	void Clear();
 	DataType GetEntry(const DataType& data) const;
 	bool Locate(const DataType& data) const;
-};
+
+}; 
 
 #endif
 
