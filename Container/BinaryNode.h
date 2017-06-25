@@ -16,12 +16,12 @@ public:
 		BinaryNode<DataType>* rightchild);
 
 	void SetData(const DataType& newdata);
-	DataType GetData();
+	DataType GetData() const;
 
-	bool IsLeaf();
+	bool IsLeaf() const;
 
-	BinaryNode<DataType>* GetLeftChild();
-	BinaryNode<DataType>* GetRightChild();
+	BinaryNode<DataType>* GetLeftChild() const;
+	BinaryNode<DataType>* GetRightChild() const;
 
 	void SetLeftChild(BinaryNode<DataType>* leftchild);
 	void SetRightChild(BinaryNode<DataType>* rightchild);

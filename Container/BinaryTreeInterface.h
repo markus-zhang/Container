@@ -10,11 +10,10 @@ public:
 	virtual int GetNumNodes() const = 0;
 	virtual DataType GetRootData() const = 0;
 	virtual void SetRootData(const DataType& newdata) = 0;
-	virtual void Add(const DataType& newdata) = 0;
-	virtual void Remove(const DataType& olddata) = 0;
+	virtual bool Add(const DataType& newdata) = 0;
+	virtual bool Remove(const DataType& olddata) = 0;
 	virtual void Clear() = 0;
-	virtual DataType GetEntry(const DataType& data) const
-		throw(NotFoundException) = 0;
+	virtual DataType GetEntry(const DataType& data) const = 0;
 	virtual bool Locate(const DataType& data) const = 0;
 
 	virtual void PreOrder(void Process(DataType&)) const = 0;

@@ -1,4 +1,5 @@
-#include "BinaryNode.h"
+#ifdef BINARYNODE_
+//#include "BinaryNode.h"
 
 template<class DataType>
 BinaryNode<DataType>::BinaryNode()
@@ -30,25 +31,41 @@ void BinaryNode<DataType>::SetData(const DataType& newdata)
 }
 
 template<class DataType>
-DataType BinaryNode<DataType>::GetData()
+DataType BinaryNode<DataType>::GetData() const
 {
 	return m_Data;
 }
 
 template<class DataType>
-bool BinaryNode<DataType>::IsLeaf()
+bool BinaryNode<DataType>::IsLeaf() const
 {
 
 }
 
 template<class DataType>
-BinaryNode<DataType>* BinaryNode<DataType>::GetLeftChild()
+BinaryNode<DataType>* BinaryNode<DataType>::GetLeftChild() const
 {
 	return m_LeftChild;
 }
 
 template<class DataType>
-BinaryNode<DataType>* BinaryNode<DataType>::GetRightChild()
+BinaryNode<DataType>* BinaryNode<DataType>::GetRightChild() const
 {
 	return m_RightChild;
 }
+
+template<class DataType>
+void BinaryNode<DataType>::SetLeftChild(
+	BinaryNode<DataType>* leftchild)
+{
+	m_LeftChild = leftchild;
+}
+
+template<class DataType>
+void BinaryNode<DataType>::SetRightChild(
+	BinaryNode<DataType>* rightchild)
+{
+	m_RightChild = rightchild;
+}
+
+#endif

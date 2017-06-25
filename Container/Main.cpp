@@ -5,10 +5,17 @@
 #include "ULinkedList.h"
 #include "test.h"
 #include "SDL.h"
+#include "BinaryNodeTree.h"
 
 
 int main(int argc, char* args[])
 {
+	//	Binary Tree test
+
+	BinaryNodeTree<int> test_tree;
+
+	//	ULinkedList test
+	
 	ULinkedList<int> test_list;
 	test_list.Insert(10);
 	test_list.Insert(20);
@@ -44,7 +51,7 @@ int main(int argc, char* args[])
 		}
 	};
 	std::function<bool(int, int)> func = func_temp();
-	test_list.CopyIf(func, 65, test_list_2);
+	//test_list.CopyIf(func, 65, test_list_2);
 
 	/*std::cout << SDL_GetCPUCacheLineSize() << std::endl;
 	test_manager test_mgr;
