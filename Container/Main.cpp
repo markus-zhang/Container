@@ -5,14 +5,57 @@
 #include "ULinkedList.h"
 #include "test.h"
 #include "SDL.h"
-#include "BinaryNodeTree.h"
+//#include "BinaryNodeTree.h"
+#include "BTNodeTree.h"
 
 
 int main(int argc, char* args[])
 {
 	//	Binary Tree test
 
-	BinaryNodeTree<int> test_tree;
+	cBTNodeTree* testtree = new cBTNodeTree();
+	testtree->Insert(80);
+	testtree->Insert(90);
+	testtree->Insert(40);
+	testtree->Insert(10);
+	testtree->Insert(50);
+	testtree->Insert(30);
+	testtree->Insert(20);
+	testtree->Insert(60);
+	testtree->Insert(70);
+
+	testtree->TraverseLevel();
+	cBTNode* temp = new cBTNode();
+	testtree->InOrderDisplay();
+	/*temp = testtree->Search(50);
+	testtree->FindPreSucc(temp);*/
+	testtree->FindPreSucc(testtree->GetRoot(), 50);
+	SDL_Delay(10000);
+	
+	/*cBTNode* test1 = new cBTNode(10);
+	cBTNode* test2 = new cBTNode(20);
+	cBTNode* test3 = new cBTNode(30);
+	cBTNode* test4 = new cBTNode(40);
+	cBTNode* test5 = new cBTNode(50);
+	cBTNode* test6 = new cBTNode(60);
+	cBTNode* test7 = new cBTNode(70);
+	cBTNode* test8 = new cBTNode(80);
+	cBTNode* test9 = new cBTNode(90);
+	cBTNodeTree* tree = new cBTNodeTree(test1);
+
+	test1->SetLeftChild(test2);
+	test1->SetRightChild(test3);
+	test2->SetLeftChild(test4);
+	test2->SetRightChild(test5);
+	test4->SetRightChild(test7);
+	test3->SetRightChild(test6);
+	test6->SetLeftChild(test8);
+	test8->SetLeftChild(test9);
+
+	std::cout << "Height is " << tree->GetHeightNonRV2();
+	SDL_Delay(5000);
+
+	*/
 
 	//	ULinkedList test
 	

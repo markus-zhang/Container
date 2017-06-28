@@ -62,7 +62,7 @@ public:
 	int GetHeight() const;
 	int GetNumNodes() const;
 	DataType GetRootData() const;
-	void SetRootData(const DataType& newdata);
+	void SetRooetData(const DataType& newdata);
 	bool Add(const DataType& newdata);
 	bool Remove(const DataType& data);
 	void Clear();

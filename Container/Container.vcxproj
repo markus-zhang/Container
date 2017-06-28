@@ -121,6 +121,8 @@
     <ClInclude Include="BinaryNode.h" />
     <ClInclude Include="BinaryNodeTree.h" />
     <ClInclude Include="BinaryTreeInterface.h" />
+    <ClInclude Include="BTNode.h" />
+    <ClInclude Include="BTNodeTree.h" />
     <ClInclude Include="DLinkedList.h" />
     <ClInclude Include="SLinkedList.h" />
     <ClInclude Include="test.h" />
@@ -129,6 +131,7 @@
   <ItemGroup>
     <ClCompile Include="BinaryNode.cpp" />
     <ClCompile Include="BinaryNodeTree.cpp" />
+    <ClCompile Include="BTNodeTree.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
