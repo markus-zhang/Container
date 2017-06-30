@@ -188,7 +188,7 @@ void BinaryNodeTree<typename DataType>::PreOrderHelper(
 	DataType temp = treeptr->GetData();
 	Process(temp);
 	InOrderHelper(Process, treeptr->GetLeftChild());
-	InOrderHelper(Process, treeptr->GetLeftChild());
+	InOrderHelper(Process, treeptr->GetRightChild());
 }
 
 template <typename DataType>
@@ -200,7 +200,7 @@ void BinaryNodeTree<typename DataType>::InOrderHelper(
 	InOrderHelper(Process, treeptr->GetLeftChild());
 	DataType temp = treeptr->GetData();
 	Process(temp);
-	InOrderHelper(Process, treeptr->GetLeftChild());
+	InOrderHelper(Process, treeptr->GetRightChild());
 
 }
 

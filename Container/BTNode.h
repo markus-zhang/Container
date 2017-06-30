@@ -71,6 +71,11 @@ public:
 		m_Data = data;
 	}
 
+	void ModifyData(float& data)
+	{
+		m_Data = data;
+	}
+
 	void SetLeftChild(cBTNode* leftchild)
 	{
 		m_LeftChild = leftchild;

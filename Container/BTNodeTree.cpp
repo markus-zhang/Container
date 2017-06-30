@@ -174,7 +174,64 @@ cBTNode* cBTNodeTree::SearchHelper(cBTNode* node, const float& data)
 
 void cBTNodeTree::Deletion(const float& data)
 {
+	DeletionHelper(data, m_Root);
+}
 
+cBTNode* cBTNodeTree::DeletionHelper(const float& data, cBTNode* node)
+{
+	//	We need to return cBTNode* to reset the root after the tree
+	//	has been modified
+	//	Step 1: Search the tree for data recursively
+	if (node == nullptr)
+		return nullptr;
+
+	if (data < node->GetData())
+	{
+		//	Search in the left subtree
+		node->SetLeftChild(DeletionHelper(data, node->GetLeftChild()));
+	}
+	else if (data > node->GetData())
+	{
+		//	Search in the right subtree
+		node->SetRightChild(DeletionHelper(data, node->GetRightChild()));
+	}
+	else
+	{
+		//	Already found
+		//	Step 2.1	Delete a leaf node / one-child node
+		//	This is a very clever algorithm
+		//	Case 1: one-child node
+		//	node will be replaced by its non-nullptr child
+		//	Case 2: leaf node
+		//	node will be replaced by nullptr because both children are nullptr
+		if (node->GetLeftChild() == nullptr)
+			return node->GetRightChild();
+		if (node->GetRightChild() == nullptr)
+			return node->GetLeftChild();
+
+		//	Step 2.2	Delete a two-children node
+		//	Very easy, replace it with an inorder pre/succ
+		//	and recursively delete the pre/succ
+		//	The trick is to copy the data, NOT the node
+		if (FindNodeSucc(data) != nullptr)
+		{
+			float temp = FindNodeSucc(data)->GetData();
+			std::cout << "Succesor is " << temp << std::endl;
+			node->ModifyData(temp);
+			//	Now we need to delete the successor
+			//	Because the successor is on the right side
+			//	So we reset the right child
+			node->SetRightChild(DeletionHelper(temp, node->GetRightChild()));
+		}
+		else if (FindNodePre(data) != nullptr)
+		{
+			float temp = FindNodePre(data)->GetData();
+			std::cout << "Precessor is " << temp << std::endl;
+			node->ModifyData(temp);
+			node->SetLeftChild(DeletionHelper(temp, node->GetLeftChild()));
+		}
+	}
+	return node;
 }
 
 void cBTNodeTree::FindPreSucc(cBTNode* node, float data)
@@ -193,7 +250,6 @@ void cBTNodeTree::FindPreSucc(cBTNode* node, float data)
 	//			then pre = node->GetData() and succ = min of node->GetRightChild()
 	//		else
 	//			set node = node->GetRightChild() and call myself
-	std::cout << node->GetData() << " ";
 	if (data < node->GetData())
 	{
 		if (node->GetLeftChild() == nullptr)
@@ -236,6 +292,180 @@ void cBTNodeTree::FindPreSucc(cBTNode* node, float data)
 	}
 }
 
+cBTNode* cBTNodeTree::FindNodePreHelper(cBTNode* node, float data)
+{
+	//	We search X from the root
+	//	Since we are looking for the predeccesor,
+	//	if data < node->GetData(), we will look into left subtree
+	//	until we hit a node(called A) that does not have a left subtree
+	//	
+	//	then we know that X is greater than A, because if X is smaller
+	//	then X must be at LEFT subtree of A
+	//
+	//	So we search the right subtree of A and keep record of the last node
+	//	we are traversing, until we find some node B larger than X, then
+	//	we will go searching at the left subtree of B
+	//
+	//	So the above procedure can be concluded as:
+
+	cBTNode* temp = Search(data);
+	if (temp == nullptr)
+		return nullptr;
+	if (temp->GetLeftChild() != nullptr)
+	{
+		//	If it has left subtree, then the predecessor must be in left subtree
+		return FindMax(temp->GetLeftChild());
+	}
+	else
+	{
+		//	Search the whole tree until we find the predecessor
+		cBTNode* pre = nullptr;
+		while (node != nullptr)
+		{
+			//	General rule:
+			//	If we go right, then either pre is in the left subtree
+			//	of the node;
+			//	Or if the node is a leaf, there are only a few possibilities:
+			//	1. grandfather -left-> father -left-> node
+			//		The trick is to memorize the first ancestor
+			//		that extends right subtree to reach grandfather
+			//		(Consider the 83 case in Main.cpp)
+			//	2. grandfather -left-> father -right-> node
+			//		Then gradfather is pre
+			//	3. grandfather -right-> father -left-> node
+			//		Again grandfather is pre
+			//	4. grandfather -right-> father -right-> node
+			//		Then father is pre
+			if (data > node->GetData())
+			{
+				//	Go for the right side
+				//	Case 1: node->GetRightChild() == nullptr
+				//		Then while() breaks, pre = node
+				//	Case 2: walk zigzag (if > then turn left, else turn right)
+				//		Until it reaches destination.
+				//		The trick is to keep a pointer to the LAST traversed node
+				pre = node;
+				node = node->GetRightChild();
+			}
+			else if (data < node->GetData())
+			{
+				//	Do not need to keep last traversed node
+				node = node->GetLeftChild();
+			}
+			else
+			{
+				//	Algorithm will always converge on node
+				//	as long as node is valid (!= nullptr)
+				//	By the time algorithm reaches node
+				//	there are two cases:
+				//	Case 1: root->...->node has a route that
+				//		consists only right jumps
+				//		Then the previous branch already
+				//		captures "pre" = parent of node
+				//		So we only need to break from loop
+				//		and return pre
+				//	Case 2: There is at least one left turn
+				//		in the route. 
+				//			Scenario 1:
+				//			If node is the RIGHT child of its
+				//			parent, then it doesn't matter, because
+				//			this will trigger the 
+				//			pre = node;
+				//			node = node->GetRightChild()
+				//			before we hit the node, i.e.
+				//			when we hit the parent of the node
+				//			and we only need to break to return its parent
+				//			which is captured by "pre".
+				//			
+				//			Scenario 2:
+				//			If node is the LEFT child of its parent,
+				//			then "pre" has already captured our target
+				//			Because the LAST NODE ON THE ROUTE THAT GOES
+				//			TO ITS RIGHT CHILD is the predecessor
+				//			And it is captured by
+				//			pre = node;
+				//			node = node->GetRightChild()
+				//			and we only need to break to return
+				break;
+			}
+		}
+		return pre;
+	}
+}
+
+cBTNode* cBTNodeTree::FindNodeSuccHelper(cBTNode* node, float data)
+{
+	cBTNode* temp = Search(data);
+	if (temp == nullptr)
+		return nullptr;
+	if (temp->GetRightChild() != nullptr)
+	{
+		//	If it has right subtree, then the successor must be in right subtree
+		return FindMin(temp->GetRightChild());
+	}
+	else
+	{
+		//	Search the whole tree until we find the successor
+		cBTNode* succ = nullptr;
+		while (node != nullptr)
+		{
+			if (data < node->GetData())
+			{
+				//	Go for the left side
+				//	Case 1: node->GetLeftChild() == nullptr
+				//		Then while() breaks, succ = node
+				//	Case 2: walk zigzag (if > then turn left, else turn right)
+				//		Until it reaches destination.
+				//		The trick is to keep a pointer to the LAST traversed node
+				succ = node;
+				node = node->GetLeftChild();
+			}
+			else if (data > node->GetData())
+			{
+				//	Do not need to keep last traversed node
+				node = node->GetRightChild();
+			}
+			else
+			{
+				//	Algorithm will always converge on node
+				//	as long as node is valid (!= nullptr)
+				//	By the time algorithm reaches node
+				//	there are two cases:
+				//	Case 1: root->...->node has a route that
+				//		consists only left jumps
+				//		Then the previous branch already
+				//		captures "succ" = parent of node
+				//		So we only need to break from loop
+				//		and return "succ" (example: 10)
+				//	Case 2: There is at least one right turn
+				//		in the route. 
+				//			Scenario 1: (example: 20)
+				//			If node is the LEFT child of its
+				//			parent, then it doesn't matter, because
+				//			this will trigger the 
+				//			succ = node;
+				//			node = node->GetLeftChild()
+				//			before we hit the node, i.e.
+				//			when we hit the parent of the node
+				//			and we only need to break to return its parent
+				//			which is captured by "succ".
+				//			
+				//			Scenario 2: (example: 30)
+				//			If node is the RIGHT child of its parent,
+				//			then "pre" has already captured our target
+				//			Because the LAST NODE ON THE ROUTE THAT GOES
+				//			TO ITS LEFT CHILD is the predecessor
+				//			And it is captured by
+				//			succ = node;
+				//			node = node->GetLeftChild()
+				//			and we only need to break to return
+				break;
+			}
+		}
+		return succ;
+	}
+}
+
 cBTNode* cBTNodeTree::FindMax(cBTNode* node)
 {
 	//	Simply the most right node
@@ -262,7 +492,7 @@ cBTNode* cBTNodeTree::FindMin(cBTNode* node)
 	else
 	{
 		node = node->GetLeftChild();
-		FindMax(node);
+		FindMin(node);
 	}
 }
 
@@ -275,4 +505,100 @@ void cBTNodeTree::InOrderHelper(cBTNode* node)
 	InOrderHelper(node->GetLeftChild());
 	DisplayNode(node->GetData());
 	InOrderHelper(node->GetRightChild());
+}
+
+bool cBTNodeTree::IsBSTHelper(cBTNode* root)
+{
+	//	Recursively check if the tree / subtree is BST
+	if (root == nullptr)
+	{
+		return true;	//	A null tree is considered as a BST
+	}
+
+	//	For all other scenarios
+	//	Case I: Leaf
+	if (root->IsLeaf())
+	{
+		return true;	//	A leaf is, of course, the minimum BST
+	}
+	//	Case II: Others
+	else
+	{
+		//	Check the left child
+		if (root->GetLeftChild() != nullptr)
+		{
+			if (root->GetLeftChild()->GetData() < root->GetData())
+			{
+				//	Continue check the left subtree
+				return IsBSTHelper(root->GetLeftChild());
+			}
+			else
+				return false;
+		}
+		//	Check the right child
+		if (root->GetRightChild() != nullptr)
+		{
+			if (root->GetRightChild()->GetData() > root->GetData())
+			{
+				//	Continue check the right subtree
+				return IsBSTHelper(root->GetRightChild());
+			}
+			else
+				return false;
+		}
+	}
+	return false;
+}
+
+void cBTNodeTree::MakeNonBST()
+{
+	//	To test IsBST() we must make a non-BS tree
+	//	By simply swap the value of the root with left children
+	//	If left child is nullptr, we create one
+	if (m_Root == nullptr)
+		return;
+
+	if (m_Root->GetLeftChild() != nullptr)
+	{
+		float temp = m_Root->GetData();
+		m_Root->SetData(m_Root->GetLeftChild()->GetData());
+		m_Root->GetLeftChild()->SetData(temp);
+	}
+	else
+	{
+		cBTNode* temp = new cBTNode(m_Root->GetData() + 100);
+		m_Root->SetLeftChild(temp);
+	}
+	return;
+}
+
+void cBTNodeTree::PrintNodeInRange(const float& lower, const float& upper)
+{
+	PrintNodeInRangeHelper(lower, upper, m_Root);
+	return;
+}
+
+void cBTNodeTree::PrintNodeInRangeHelper(
+	const float& lower, const float& upper, cBTNode* root)
+{
+	//	nullptr
+	if (root == nullptr)
+		return;
+	//	Inorder Traversal
+	if (root->GetData() <= upper && root->GetData() >= lower)
+	{
+		//	Print out the result
+		std::cout << root->GetData() << ", ";
+		PrintNodeInRangeHelper(lower, upper, root->GetLeftChild());
+		PrintNodeInRangeHelper(lower, upper, root->GetRightChild());
+	}
+	else if (root->GetData() >= upper)
+	{
+		PrintNodeInRangeHelper(lower, upper, root->GetLeftChild());
+	}
+	else if (root->GetData() <= lower)
+	{
+		PrintNodeInRangeHelper(lower, upper, root->GetRightChild());
+	}
+	return;
 }

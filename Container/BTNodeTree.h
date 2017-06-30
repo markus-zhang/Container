@@ -29,6 +29,14 @@ public:
 	cBTNode* FindMax(cBTNode* node);
 	cBTNode* FindMin(cBTNode* node);
 	void InOrderHelper(cBTNode* node);
+	cBTNode* FindNodePreHelper(cBTNode* node, float data);
+	cBTNode* FindNodeSuccHelper(cBTNode* node, float data);
+	cBTNode* DeletionHelper(const float& data, cBTNode* root);
+	bool IsBSTHelper(cBTNode* root);
+	void MakeNonBST();	//Break the BST structure for IsBST() test
+	void PrintNodeInRangeHelper(
+		const float& lower, const float& upper,
+		cBTNode* root);
 	void DisplayNode(const float& data)
 	{
 		std::cout << data << std::endl;
@@ -54,12 +62,27 @@ public:
 	}
 	void Deletion(const float& data);
 
-	//	Find the inorder predecessor and successor of given node
+	//	Find the inorder predecessor and successor of a number THAT IS NOT IN THE TREE
 	void FindPreSucc(cBTNode* node, float data);
+
+	//	Find the pre and succ for a node
+	cBTNode* FindNodePre(float data)
+	{
+		return FindNodePreHelper(m_Root, data);
+	}
+	cBTNode* FindNodeSucc(float data)
+	{
+		return FindNodeSuccHelper(m_Root, data);
+	}
 	void InOrderDisplay()
 	{
 		InOrderHelper(m_Root);
 	}
+	bool IsBST()
+	{
+		return IsBSTHelper(m_Root);
+	}
+	void PrintNodeInRange(const float& lower, const float& upper);
 };
 
 #endif

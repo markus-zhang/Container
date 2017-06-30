@@ -16,8 +16,13 @@ int main(int argc, char* args[])
 	cBTNodeTree* testtree = new cBTNodeTree();
 	testtree->Insert(80);
 	testtree->Insert(90);
+	testtree->Insert(85);
+	testtree->Insert(88);
+	testtree->Insert(83);
 	testtree->Insert(40);
 	testtree->Insert(10);
+	testtree->Insert(18);
+	testtree->Insert(15);
 	testtree->Insert(50);
 	testtree->Insert(30);
 	testtree->Insert(20);
@@ -26,11 +31,30 @@ int main(int argc, char* args[])
 
 	testtree->TraverseLevel();
 	cBTNode* temp = new cBTNode();
-	testtree->InOrderDisplay();
-	/*temp = testtree->Search(50);
-	testtree->FindPreSucc(temp);*/
-	testtree->FindPreSucc(testtree->GetRoot(), 50);
-	SDL_Delay(10000);
+	//testtree->InOrderDisplay();
+	//testtree->FindPreSucc(testtree->GetRoot(), 50);
+	//testtree->Deletion(20);
+	//testtree->TraverseLevel();
+	//temp = testtree->FindNodeSucc(30);
+	//std::cout << temp->GetData();
+
+	//testtree->Deletion(40);
+	//testtree->TraverseLevel();
+
+	/*testtree->MakeNonBST();
+	std::cout << "New Tree is :" << std::endl;
+	testtree->TraverseLevel();
+	std::cout << "Testing for BST..." << std::endl;
+	if (testtree->IsBST())
+	{
+		std::cout << "I'm a BST!" << std::endl;
+	}
+	else
+	{
+		std::cout << "I'm not a BST!" << std::endl;
+	}*/
+	testtree->PrintNodeInRange(25, 80);
+	SDL_Delay(100000);
 	
 	/*cBTNode* test1 = new cBTNode(10);
 	cBTNode* test2 = new cBTNode(20);
