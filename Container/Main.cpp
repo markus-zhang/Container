@@ -7,10 +7,17 @@
 #include "SDL.h"
 //#include "BinaryNodeTree.h"
 #include "BTNodeTree.h"
+#include "Arith.h"
 
 
 int main(int argc, char* args[])
-{
+{	
+	//	Arith tree test
+	cArith* atree = new cArith();
+	atree->Scan("(101.356)+15.56*(5+43.02)");
+	atree->Display();
+	SDL_Delay(50000);
+	
 	//	Binary Tree test
 
 	cBTNodeTree* testtree = new cBTNodeTree();

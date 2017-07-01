@@ -118,6 +118,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Arith.h" />
     <ClInclude Include="BinaryNode.h" />
     <ClInclude Include="BinaryNodeTree.h" />
     <ClInclude Include="BinaryTreeInterface.h" />
@@ -129,6 +130,7 @@
     <ClInclude Include="ULinkedList.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Arith.cpp" />
     <ClCompile Include="BinaryNode.cpp" />
     <ClCompile Include="BinaryNodeTree.cpp" />
     <ClCompile Include="BTNodeTree.cpp" />

@@ -42,6 +42,9 @@
     <ClInclude Include="BTNodeTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Arith.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -54,6 +57,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BTNodeTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Arith.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
