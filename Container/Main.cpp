@@ -14,8 +14,12 @@ int main(int argc, char* args[])
 {	
 	//	Arith tree test
 	cArith* atree = new cArith();
-	atree->Scan("(101.356)+15.56*(5+43.02)");
-	atree->Display();
+	atree->Scan("(((((2+3*4)))+(2.5*4+0)/(2.5+2.5))");
+	//atree->Display();
+	atree->ParseListSelf();
+	//atree->ParseSelf();
+	//float result = atree->EvaluateSelf();
+	//std::cout << result;
 	SDL_Delay(50000);
 	
 	//	Binary Tree test

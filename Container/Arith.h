@@ -44,6 +44,9 @@ public:
 	//	Scan Utility
 	float ScanFloat(char* input, int& index);
 	void ScanHelper(char* input, std::list<cToken>& output);
+
+	//	EvaluateList Utility
+	float EvaluateExpression(float left, int op, float right);
 public:
 	cArith()
 	{
@@ -62,6 +65,23 @@ public:
 
 	//	Parse
 	cArithNode* Parse(std::list<cToken> ls);
+	void ParseList(std::list<cToken> ls);
+	void ParseListSelf()
+	{
+		ParseList(ls);
+	}
+	void ParseSelf();
+
+	//	Evaluate
+	int GetPriority(int op);
+	void EvaluateList(std::list<float>& ls_operand,
+		std::list<int>& ls_operator, int priority);
+	bool ParenOnly(std::list<int> ls_operator);
+	float Evaluate(cArithNode* root);
+	float EvaluateSelf()
+	{
+		return Evaluate(m_Root);
+	}
 	
 };
 #endif
