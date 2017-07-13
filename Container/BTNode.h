@@ -3,7 +3,7 @@
 
 class cBTNode
 {
-private:
+public:
 	cBTNode* m_LeftChild;
 	cBTNode* m_RightChild;
 	float m_Data;

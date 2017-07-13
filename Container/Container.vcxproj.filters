@@ -45,6 +45,9 @@
     <ClInclude Include="Arith.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BTDicNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

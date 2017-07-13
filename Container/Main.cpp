@@ -12,15 +12,87 @@
 
 int main(int argc, char* args[])
 {	
-	//	Arith tree test
-	cArith* atree = new cArith();
-	atree->Scan("(((((2+3*4)))+(2.5*4+0)/(2.5+2.5))");
-	//atree->Display();
-	atree->ParseListSelf();
-	//atree->ParseSelf();
-	//float result = atree->EvaluateSelf();
-	//std::cout << result;
-	SDL_Delay(50000);
+	// Get Largest BST
+	cBTNodeTree* largetree = new cBTNodeTree();
+	cBTNode* node10 = new cBTNode(10);
+	cBTNode* node15 = new cBTNode(15);
+	cBTNode* node12 = new cBTNode(12);
+	cBTNode* node11 = new cBTNode(11);
+	cBTNode* node18 = new cBTNode(18);
+	cBTNode* node17 = new cBTNode(17);
+	cBTNode* node14 = new cBTNode(14);
+	cBTNode* node20 = new cBTNode(20);
+	cBTNode* node13 = new cBTNode(13);
+	cBTNode* node22 = new cBTNode(22);
+	cBTNode* node21 = new cBTNode(21);
+	cBTNode* node25 = new cBTNode(25);
+	cBTNode* node29 = new cBTNode(29);
+	
+	largetree->m_Root = node10;
+	largetree->m_Root->m_LeftChild = node15;
+	largetree->m_Root->m_RightChild = node12;
+	node15->m_LeftChild = node11;
+	node15->m_RightChild = node18;
+	node12->m_RightChild = node14;
+	node12->m_LeftChild = node17;
+
+	node18->m_RightChild = node20;
+	node14->m_LeftChild = node13;
+	node14->m_RightChild = node22;
+	node22->m_LeftChild = node21;
+	node22->m_RightChild = node25;
+	node25->m_RightChild = node29;
+
+	largetree->DisplayLevel();
+	std::cout << "***********" << std::endl;
+	cBTNodeTree* blah = new cBTNodeTree();
+	blah = largetree->BT2BST();
+	blah->DisplayLevel();
+
+	//largetree->FindLargestBST();
+	SDL_Delay(100000);
+
+	// section 16.4 test
+	/*cBTNodeTree* testtree3 = new cBTNodeTree();
+	testtree3->Insert(5);
+	testtree3->Insert(10);
+	testtree3->Insert(15);
+	testtree3->Insert(20);
+	testtree3->Insert(25);
+	testtree3->Insert(30);
+	testtree3->Insert(35);
+	testtree3->Insert(40);
+
+	testtree3->DisplayLevel();
+	std::list<float> ls2;
+	testtree3->Save(ls2);
+	cBTNodeTree* testtree4 = new cBTNodeTree();
+	testtree4->LoadBalancedPtrMain(ls2);
+	std::cout << testtree4->FindLargestBST()->GetData();
+	SDL_Delay(100000);*/
+	
+	/*std::cout << testtree3->BalanceFactor();
+	std::cout << std::endl;*/
+	//testtree3->DisplayLevel();
+	//std::list<float> ls2;
+	//testtree3->Save(ls2);
+	//cBTNodeTree* testtree4 = new cBTNodeTree();
+	///*testtree4->LoadOriginal(ls2);*/
+	//testtree4->LoadBalancedPtrMain(ls2);
+	//std::cout << "*********************" << std::endl;
+	//testtree4->DisplayLevel();
+
+	//SDL_Delay(100000);
+	
+	////	Arith tree test
+	//cArith* atree = new cArith();
+	//atree->Scan("(((((2+3*4)))+(2.5*4+0)/(2.5+2.5))*100");
+	////atree->Display();
+	//atree->ParseListSelf();
+	////atree->ParseSelf();
+	////float result = atree->EvaluateSelf();
+	////std::cout << result;
+	//SDL_Delay(50000);
 	
 	//	Binary Tree test
 
@@ -40,8 +112,28 @@ int main(int argc, char* args[])
 	testtree->Insert(60);
 	testtree->Insert(70);
 
-	testtree->TraverseLevel();
-	cBTNode* temp = new cBTNode();
+	std::list<float> ls;
+	testtree->Save(ls);
+	testtree->DisplayLevel();
+	cBTNodeTree* testtree2 = new cBTNodeTree();
+	testtree2->LoadOriginal(ls);
+	testtree->DisplayLevel();
+	std::cout << "Balance factor is: " << testtree->BalanceFactor();
+
+	/*for (auto i : ls)
+	{
+		std::cout << i << ", ";
+	}
+	std::cout << std::endl;
+	cBTNodeTree* testtree2 = new cBTNodeTree();
+	testtree2->LoadOriginal(ls);
+	testtree->InOrderDisplay();
+	std::cout << "*******************" << std::endl;
+	testtree2->InOrderDisplay();*/
+	SDL_Delay(500000);
+
+	//testtree->TraverseLevel();
+	//cBTNode* temp = new cBTNode();
 	//testtree->InOrderDisplay();
 	//testtree->FindPreSucc(testtree->GetRoot(), 50);
 	//testtree->Deletion(20);
@@ -64,8 +156,8 @@ int main(int argc, char* args[])
 	{
 		std::cout << "I'm not a BST!" << std::endl;
 	}*/
-	testtree->PrintNodeInRange(25, 80);
-	SDL_Delay(100000);
+	//testtree->PrintNodeInRange(25, 80);
+	//SDL_Delay(100000);
 	
 	/*cBTNode* test1 = new cBTNode(10);
 	cBTNode* test2 = new cBTNode(20);

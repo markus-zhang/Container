@@ -125,6 +125,7 @@
     <ClInclude Include="BTNode.h" />
     <ClInclude Include="BTNodeTree.h" />
     <ClInclude Include="DLinkedList.h" />
+    <ClInclude Include="BTDicNode.h" />
     <ClInclude Include="SLinkedList.h" />
     <ClInclude Include="test.h" />
     <ClInclude Include="ULinkedList.h" />

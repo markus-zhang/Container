@@ -1,5 +1,6 @@
 #include <stack>
 #include <iostream>
+#include <algorithm>
 #include "BTNodeTree.h"
 
 int cBTNodeTree::GetHeight(cBTNode* root)
@@ -9,10 +10,8 @@ int cBTNodeTree::GetHeight(cBTNode* root)
 	{
 		return 0;
 	}
-
-	return (GetHeight(root->GetLeftChild()) >= GetHeight(root->GetLeftChild())
-		? 1 + GetHeight(root->GetLeftChild())
-		: 1 + GetHeight(root->GetRightChild()));
+	return std::max(1 + GetHeight(root->GetLeftChild()),
+		1 + GetHeight(root->GetRightChild()));
 }
 
 int cBTNodeTree::GetHeightNonR()
@@ -601,4 +600,450 @@ void cBTNodeTree::PrintNodeInRangeHelper(
 		PrintNodeInRangeHelper(lower, upper, root->GetRightChild());
 	}
 	return;
+}
+
+void cBTNodeTree::SaveHelper(std::list<float>& ls, cBTNode* root)
+{
+	//	Preorder traverse and save the elements into ls
+	if (root == nullptr)	return;
+	ls.push_back(root->GetData());
+	SaveHelper(ls, root->GetLeftChild());
+	SaveHelper(ls, root->GetRightChild());
+}
+
+void cBTNodeTree::LoadOriginal(std::list<float>& ls)
+{
+	//	Load and restore original shape
+	while (ls.size() > 0)
+	{
+		m_Root = LoadOriginalHelper(ls.front(), m_Root);
+		ls.pop_front();
+	}
+}
+
+cBTNode* cBTNodeTree::LoadOriginalHelper(float f,
+	cBTNode* root)
+{
+	cBTNode* node = new cBTNode();
+	if (root == nullptr)
+	{
+		root = new cBTNode(f);
+		return root;
+	}
+	//	root is NOT nullptr
+	cBTNode* left = root->GetLeftChild();
+	cBTNode* right = root->GetRightChild();
+	if (f < root->GetData())
+	{
+		left = LoadOriginalHelper(f, left);
+		root->SetLeftChild(left);
+	}
+	else
+	{
+		right = LoadOriginalHelper(f, right);
+		root->SetRightChild(right);
+	}
+	return root;
+}
+
+
+cBTNode* cBTNodeTree::LoadBalancedHelper(std::list<float>& ls,
+	cBTNode* root)
+{
+	cBTNode* temp = new cBTNode();
+	//	Stopping Condition I:
+	if (ls.size() <= 0)
+		return nullptr;
+
+	//	Stopping Condition II:
+	if (ls.size() == 1)
+	{
+		temp->SetData(ls.front());
+		return temp;
+	}
+
+	//	When we have at least 2 elements in the list
+	//	Step 1: Locate the middle element
+	cBTNode* left = temp->GetLeftChild();
+	cBTNode* right = temp->GetRightChild();
+	if (ls.size() % 2 == 0)
+	{
+		//	Even numbers of elements
+		int middle = ls.size() / 2;
+		std::list<float> ls_left;
+		std::list<float> ls_right;
+		int index = 0;
+
+		while (index < middle)
+		{
+			ls_left.push_back(ls.front());
+			ls.pop_front();
+		}
+		//	Now we reach the middle element
+		temp->SetData(ls.front());
+		ls.pop_front();
+		//	The rest is actually ls_right
+		while (ls.size() > 0)
+		{
+			ls_right.push_back(ls.front());
+			ls.pop_front();
+		}
+		//	Now we have the root and two lists
+
+
+	}
+}
+
+void cBTNodeTree::LoadBalanced(std::list<float>& ls,
+	cBTNode*& root)
+{
+	std::cout << "Height is " << GetHeightNonR() << std::endl;
+	//	Stopping Condition I:
+	if (ls.size() <= 0)
+	{
+		root = nullptr;
+		return;
+	}
+
+	//	Stopping Condition II:
+	if (ls.size() == 1)
+	{
+		root = new cBTNode(ls.front());
+		return;
+	}
+
+	//	When we have at least 2 elements in the list
+	//	Step 1: Locate the index of middle element
+
+	int middle = (ls.size() - 1) / 2;
+	std::list<float> ls_left;
+	std::list<float> ls_right;
+	int index = 0;
+	
+	//	Step 2: Get ls_left, middle element and ls_right
+	while (index < middle)
+	{
+		ls_left.push_back(ls.front());
+		ls.pop_front();
+		index += 1;
+	}
+	//	Now we reach the middle element
+	root = new cBTNode(ls.front());
+	std::cout << root->GetData() << " ";
+	ls.pop_front();
+	//	The rest is actually ls_right
+	while (ls.size() > 0)
+	{
+		ls_right.push_back(ls.front());
+		ls.pop_front();
+	}
+	//	Now we have the root and two lists
+	cBTNode* left = root->GetLeftChild();
+	cBTNode* right = root->GetRightChild();
+	if (ls_left.size() > 0)
+	{
+		LoadBalanced(ls_left, left);
+		root->SetLeftChild(left);
+	}
+	else
+	{
+		left = nullptr;
+	}
+	if (ls_right.size() > 0)
+	{
+		LoadBalanced(ls_right, right);
+		root->SetRightChild(right);
+	}
+	else
+	{
+		right = nullptr;
+	}
+	//}
+}
+
+cBTNode* cBTNodeTree::LoadBalancedPtr(std::list<float>& ls,
+	cBTNode* root)
+{
+	//	Stopping Condition I:
+	if (ls.size() <= 0)
+	{
+		return nullptr;
+	}
+
+	//	Stopping Condition II:
+	if (ls.size() == 1)
+	{
+		cBTNode* node = new cBTNode(ls.front());
+		return node;
+	}
+
+	//	When we have at least 2 elements in the list
+	//	Step 1: Locate the index of middle element
+
+	int middle = (ls.size() - 1) / 2;
+	std::list<float> ls_left;
+	std::list<float> ls_right;
+	int index = 0;
+
+	//	Step 2: Get ls_left, middle element and ls_right
+	while (index < middle)
+	{
+		ls_left.push_back(ls.front());
+		ls.pop_front();
+		index += 1;
+	}
+	//	Now we reach the middle element
+	cBTNode* node = new cBTNode(ls.front());
+	ls.pop_front();
+	//	The rest is actually ls_right
+	while (ls.size() > 0)
+	{
+		ls_right.push_back(ls.front());
+		ls.pop_front();
+	}
+	//	Now we have the root and two lists
+	cBTNode* left = node->GetLeftChild();
+	cBTNode* right = node->GetRightChild();
+	if (ls_left.size() > 0)
+	{
+		left = LoadBalancedPtr(ls_left, left);
+		node->SetLeftChild(left);
+	}
+	else
+	{
+		left = nullptr;
+	}
+	if (ls_right.size() > 0)
+	{
+		right = LoadBalancedPtr(ls_right, right);
+		node->SetRightChild(right);
+	}
+	else
+	{
+		right = nullptr;
+	}
+	return node;
+}
+
+void cBTNodeTree::DisplayLevel()
+{
+	//	Level order travesal (Single List Version)
+	//	We will store the nodes of every LEVEL into a container
+	//	And loop through the container to locate the nodes of next level
+	//	We will also remove the nodes of last level from the container
+	//	After each remove height+= 1
+	//	Stop until the container is null (no next level)
+	std::list<cBTNode*> level;
+
+	if (m_Root == nullptr && level.size() == 0)
+		return;
+
+	std::cout << m_Root->GetData() << std::endl;
+	level.push_back(m_Root);
+	while (1)
+	{
+		int temp = level.size();
+		while (temp > 0)
+		{
+			if (level.front()->GetLeftChild() != nullptr)
+				level.push_back(level.front()->GetLeftChild());
+			if (level.front()->GetRightChild() != nullptr)
+				level.push_back(level.front()->GetRightChild());
+			level.pop_front();	//	Only pop the current level nodes
+			temp -= 1;
+		}
+		if (level.empty())
+			break;
+		else
+		{
+			//	Display this level
+			for (auto i : level)
+			{
+				std::cout << i->GetData() << " ";
+			}
+			std::cout << std::endl;
+		}
+	}
+	return;
+}
+
+int cBTNodeTree::BalanceFactor()
+{
+	//	Return the difference between the heights of two subtrees
+	if (m_Root == nullptr)
+		return 0;
+
+	int left, right;	
+	if (m_Root->GetLeftChild() == nullptr)
+		left = 0;
+	else
+		left = GetHeight(m_Root->GetLeftChild());
+
+	if (m_Root->GetRightChild() == nullptr)
+		right = 0;
+	else
+		right = GetHeight(m_Root->GetRightChild());
+	std::cout << left << " " << right << std::endl;
+
+	return left - right;
+}
+
+//cBTNode* cBTNodeTree::FindLargestBSTHelper(cBTNode* root, int& max)
+//{
+//	if (IsBSTHelper(root))
+//	{
+//		std::cout << root->GetData() << " is BST" << std::endl;
+//		int height = GetHeight(root);
+//		if (height > max)
+//		{
+//			max = height;
+//			return root;
+//		}
+//		//	ERROR: No return if height <= max
+//	}
+//	else
+//	{
+//		cBTNode* leftmax = new cBTNode();
+//		cBTNode* rightmax = new cBTNode();
+//
+//		if (root->GetLeftChild() != nullptr)
+//		{
+//			std::cout << root->GetLeftChild()->GetData() << ": left" << std::endl;
+//			leftmax = FindLargestBSTHelper(root->GetLeftChild(), max);
+//			std::cout << leftmax->GetData() << " Left max " << std::endl;
+//		}
+//		
+//		if (root->GetRightChild() != nullptr)
+//		{
+//			rightmax = FindLargestBSTHelper(root->GetRightChild(), max);
+//		}
+//		if (GetHeight(leftmax) >= GetHeight(rightmax))
+//		{
+//			return leftmax;
+//		}
+//		else
+//		{
+//			return rightmax;
+//		}
+//	}
+//}
+
+void cBTNodeTree::FindLargestBSTHelper(cBTNode* root, int& max)
+{
+	if (IsBSTHelper(root))
+	{
+		std::cout << root->GetData() << " is BST" << std::endl;
+		int height = GetHeight(root);
+		if (height > max)
+		{
+			max = height;
+		}
+		//	ERROR: No return if height <= max
+	}
+	else
+	{
+		if (root->GetLeftChild() != nullptr)
+		{
+			FindLargestBSTHelper(root->GetLeftChild(), max);
+		}
+
+		if (root->GetRightChild() != nullptr)
+		{
+			FindLargestBSTHelper(root->GetRightChild(), max);
+		}
+	}
+}
+
+void cBTNodeTree::FindLargestBST()
+{
+	int max = 0;
+	FindLargestBSTHelper(m_Root, max);
+	std::cout << "Maximum is: " << max << std::endl;
+}
+
+void cBTNodeTree::PrintTwoBST(cBTNode* root1, cBTNode* root2)
+{
+	std::vector<float> vBST1 = BST2Array(root1);
+	std::vector<float> vBST2 = BST2Array(root2);
+	MergeArray(vBST1, vBST2);
+	for (auto i : vBST1)
+	{
+		std::cout << i << ", ";
+	}
+	std::cout << std::endl;
+}
+
+std::vector<float> cBTNodeTree::BST2Array(cBTNode* root)
+{
+	std::vector<float> vBST;
+	//	Inorder traverse
+	BST2ArrayHelper(m_Root, vBST);
+	return vBST;
+}
+
+void cBTNodeTree::BST2ArrayHelper(cBTNode* root, std::vector<float>& vbst)
+{
+	if (root == nullptr)
+	{
+		return;
+	}
+	BST2ArrayHelper(root->GetLeftChild(), vbst);
+	vbst.push_back(root->GetData());
+	BST2ArrayHelper(root->GetRightChild(), vbst);
+}
+
+void cBTNodeTree::MergeArray(std::vector<float>& vbst1,
+	std::vector<float> vbst2)
+{
+	//	Insert vbst2 into vbst1
+	std::vector<float>::iterator it = vbst2.begin();
+	for (; it != vbst2.end(); it++)
+	{
+		vbst1.insert(
+			std::upper_bound(vbst1.begin(), vbst1.end(), *it),
+			*it);
+	}
+}
+
+cBTNodeTree* cBTNodeTree::BT2BST()
+{
+	cBTNodeTree* output = new cBTNodeTree();
+	BT2BSTHelper(m_Root, output);
+	return output;
+}
+
+void cBTNodeTree::BT2BSTHelper(cBTNode* input, cBTNodeTree*& output)
+{
+	if (input == nullptr)
+	{
+		return;
+	}
+	
+	BT2BSTHelper(input->GetLeftChild(), output);
+	output->Insert(input->GetData());
+	BT2BSTHelper(input->GetRightChild(), output);
+}
+
+cBTNode* cBTNodeTree::BalanceInsert(cBTNode* root, cBTNode* newnode)
+{
+	if (root == nullptr)
+	{
+		float data = newnode->GetData();
+		cBTNode* temp = new cBTNode(data);
+		return temp;
+	}
+
+	cBTNode* left = root->GetLeftChild();
+	cBTNode* right = root->GetRightChild();
+	if (newnode->GetData() <= root->GetData())
+	{
+		left = BalanceInsert(left, newnode);
+		root->SetLeftChild(left);
+	}
+	else
+	{
+		right = BalanceInsert(right, newnode);
+		root->SetRightChild(right);
+	}
+	return root;
 }
