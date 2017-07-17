@@ -135,6 +135,42 @@ public:
 	cBTNodeTree* BT2BST();
 	void BT2BSTHelper(cBTNode* input, cBTNodeTree*& output);
 	cBTNode* BalanceInsert(cBTNode* root, cBTNode* newnode);
+
+	//	Pointer test
+	void test(const float& item)
+	{
+		balanceAdd(item, m_Root);
+	}
+
+	void balanceAdd(const float& item, cBTNode* root)
+	{
+		if (root == m_Root)
+			bool bit = true;
+
+		if (root == nullptr)
+		{
+			root = new cBTNode();
+			m_Root;
+			root->SetData(item);
+		}
+		if (m_Root == nullptr)
+		{
+			bool bit = 1;
+		}
+		else
+		{
+			cBTNode* left = root->GetLeftChild();
+			cBTNode* right = root->GetRightChild();
+			if (item <= root->GetLeftChild()->GetData())
+			{
+				balanceAdd(item, root->GetLeftChild());
+			}
+			else
+			{
+				balanceAdd(item, root->GetRightChild());
+			}
+		}
+	}
 };
 
 #endif

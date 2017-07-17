@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Binary Tree">
+      <UniqueIdentifier>{1db8d9b6-6e03-44b8-af4e-fa65051e1d29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SLinkedList.h">
@@ -47,6 +50,12 @@
     </ClInclude>
     <ClInclude Include="BTDicNode.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryTreeNode.h">
+      <Filter>Header Files\Binary Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryTree.h">
+      <Filter>Header Files\Binary Tree</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -121,7 +121,9 @@
     <ClInclude Include="Arith.h" />
     <ClInclude Include="BinaryNode.h" />
     <ClInclude Include="BinaryNodeTree.h" />
+    <ClInclude Include="BinaryTree.h" />
     <ClInclude Include="BinaryTreeInterface.h" />
+    <ClInclude Include="BinaryTreeNode.h" />
     <ClInclude Include="BTNode.h" />
     <ClInclude Include="BTNodeTree.h" />
     <ClInclude Include="DLinkedList.h" />

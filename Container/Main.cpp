@@ -8,10 +8,47 @@
 //#include "BinaryNodeTree.h"
 #include "BTNodeTree.h"
 #include "Arith.h"
+#include "BinaryTree.h"
 
 
 int main(int argc, char* args[])
 {	
+	//	Binary Tree test
+	BST<int>* test20 = new BST<int>();
+	test20->BSTInsert(40);
+	test20->BSTInsert(55);
+	test20->BSTInsert(50);
+	test20->BSTInsert(45);
+	test20->BSTInsert(53);
+	test20->BSTInsert(51);
+	test20->BSTInsert(35);
+	test20->BSTInsert(36);
+	test20->BSTInsert(38);
+
+	test20->inOrderDisplay();
+	std::cout << std::endl;
+	test20->removeValue(35);
+	test20->levelDisplay();
+	SDL_Delay(99999);
+
+	BTN<int>* succ = test20->findPredecessor(53);
+	if (succ != nullptr)
+	{
+		std::cout << "Predecessor is " << succ->getItem() << std::endl;
+	}
+	else
+	{
+		std::cout << "There is no predecessor." << std::endl;
+	}
+	SDL_Delay(5000000);
+
+	//	Pointer test
+	cBTNodeTree* test10 = new cBTNodeTree();
+	test10->test(10);
+	std::cout << "KKK" << std::endl;
+	test10->DisplayLevel();
+	SDL_Delay(100000);
+	
 	// Get Largest BST
 	cBTNodeTree* largetree = new cBTNodeTree();
 	cBTNode* node10 = new cBTNode(10);
