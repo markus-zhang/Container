@@ -16,7 +16,7 @@ int main(int argc, char* args[])
 	// Arith
 	////	Arith tree test
 	cArith* atree = new cArith();
-	atree->Scan("-1+2*-(35+54)+sin(2)");
+	atree->Scan("-1+2*-(35+54)+sin(2*(0-0))");
 	atree->Display();
 	atree->ParseListSelf();
 	SDL_Delay(50000);

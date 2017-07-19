@@ -95,17 +95,17 @@ void cArith::ScanOp(char* input, int& index, std::list<cToken>& output)
 			token.m_Operator = 12;
 		}
 		//	If '-' is in the middle then it's complicated
-		//	Case I: If it's after a digit, then it must be binary
-		else if (input[index - 1] <= '9' && input[index - 1] >= '1')
-		{
-			token.m_Type = BOPERATOR;
-			token.m_Operator = 2;
-		}
 		//	Case II: If it's after a '(', then it must be unary
 		else if (input[index - 1] == '(')
 		{
 			token.m_Type = UOPERATOR;
 			token.m_Operator = 12;
+		}
+		//	Case I: If it's after a digit, then it must be binary
+		else if (isdigit(input[index - 1]))
+		{
+			token.m_Type = BOPERATOR;
+			token.m_Operator = 2;
 		}
 		//	Case III: If it's after a '+', '-', '*', '/', unary
 		//	However we might exclude this case as it's obscure
@@ -453,11 +453,11 @@ void cArith::ParseList(std::list<cToken> ls)
 			//	Unary Operator
 			float right = ls_operand.front();
 			ls_operator.pop_front();
-			std::cout << "Here" << std::endl;
+
 			ls_operand.pop_front();
-			std::cout << "Here 2" << std::endl;
+
 			ls_operand.push_front(EvalUnary(op, right));
-			std::cout << "Unary Evaluated" << std::endl;
+
 		}
 		else
 		{
@@ -576,11 +576,8 @@ void cArith::EvaluateList(std::list<float>& ls_operand,
 					//	Unary Operator
 					float right = ls_operand.front();
 					ls_operator.pop_front();
-					std::cout << "Here" << std::endl;
 					ls_operand.pop_front();
-					std::cout << "Here 2" << std::endl;
 					ls_operand.push_front(EvalUnary(op, right));
-					std::cout << "Unary Evaluated" << std::endl;
 				}
 				else
 				{
@@ -590,13 +587,11 @@ void cArith::EvaluateList(std::list<float>& ls_operand,
 					ls_operand.pop_front();
 					//int op = ls_operator.front();
 					ls_operator.pop_front();
-					std::cout << "Removed the second";
 					if (ls_operator.front() == 99)
 					{
 						//	Remove left parenthesis if the third one is
 						//	Sometimes it's not, e.g. ((2+3*4))
 						ls_operator.pop_front();
-						std::cout << "Removed the third";
 					}
 					std::cout << left << " " << op << " " << right << std::endl;
 					float result = EvaluateExpression(left, op, right);
@@ -645,9 +640,11 @@ float cArith::EvalUnary(int op, float right)
 		return right;
 		break;
 	case 12:
+		std::cout << "- UOperator: " << right << std::endl;
 		return right * -1;
 		break;
 	case 17:
+		std::cout << "sin " << right << std::endl;
 		return sin(right);
 		break;
 	case 18:
@@ -669,16 +666,19 @@ float cArith::EvaluateExpression(float left, int op, float right)
 	{
 	case 1:
 	{
+		std::cout << "+ operator: " << left << " " << right << std::endl;
 		return left + right;
 		break;
 	}
 	case 2:
 	{
+		std::cout << "- operator: " << left << " " << right << std::endl;
 		return left - right;
 		break;
 	}
 	case 3:
 	{
+		std::cout << "* operator: " << left << " " << right << std::endl;
 		return left * right;
 		break;
 	}
