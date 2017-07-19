@@ -16,6 +16,12 @@
     <Filter Include="Header Files\Binary Tree">
       <UniqueIdentifier>{1db8d9b6-6e03-44b8-af4e-fa65051e1d29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Arithmetic Expression">
+      <UniqueIdentifier>{0714bbbe-d6bf-40ff-aa81-b5ee70ec197e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Arithmetic Expression">
+      <UniqueIdentifier>{f1dc4ee9-b35a-43c8-b034-5ccc954d7212}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SLinkedList.h">
@@ -57,6 +63,9 @@
     <ClInclude Include="BinaryTree.h">
       <Filter>Header Files\Binary Tree</Filter>
     </ClInclude>
+    <ClInclude Include="ArithExp.h">
+      <Filter>Header Files\Arithmetic Expression</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -73,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="Arith.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ArithExp.cpp">
+      <Filter>Source Files\Arithmetic Expression</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
