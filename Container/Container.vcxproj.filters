@@ -22,6 +22,9 @@
     <Filter Include="Source Files\Arithmetic Expression">
       <UniqueIdentifier>{f1dc4ee9-b35a-43c8-b034-5ccc954d7212}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Heap">
+      <UniqueIdentifier>{97ffbfbd-2511-4d6a-92e6-9a442196b15b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SLinkedList.h">
@@ -65,6 +68,12 @@
     </ClInclude>
     <ClInclude Include="ArithExp.h">
       <Filter>Header Files\Arithmetic Expression</Filter>
+    </ClInclude>
+    <ClInclude Include="HeapInterface.h">
+      <Filter>Header Files\Heap</Filter>
+    </ClInclude>
+    <ClInclude Include="ArrayMaxHeap.h">
+      <Filter>Header Files\Heap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

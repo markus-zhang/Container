@@ -72,7 +72,7 @@ public:
 	{
 		ParseList(ls);
 	}
-	void ParseSelf();
+	//void ParseSelf();
 
 	////	Evaluate
 	int GetPriority(int op);

@@ -120,6 +120,7 @@
   <ItemGroup>
     <ClInclude Include="Arith.h" />
     <ClInclude Include="ArithExp.h" />
+    <ClInclude Include="ArrayMaxHeap.h" />
     <ClInclude Include="BinaryNode.h" />
     <ClInclude Include="BinaryNodeTree.h" />
     <ClInclude Include="BinaryTree.h" />
@@ -129,6 +130,7 @@
     <ClInclude Include="BTNodeTree.h" />
     <ClInclude Include="DLinkedList.h" />
     <ClInclude Include="BTDicNode.h" />
+    <ClInclude Include="HeapInterface.h" />
     <ClInclude Include="SLinkedList.h" />
     <ClInclude Include="test.h" />
     <ClInclude Include="ULinkedList.h" />

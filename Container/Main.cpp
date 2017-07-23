@@ -9,10 +9,36 @@
 #include "BTNodeTree.h"
 #include "ArithExp.h"
 #include "BinaryTree.h"
+#include "ArrayMaxHeap.h"
 
 
 int main(int argc, char* args[])
 {	
+	//	Array Max Heap
+	std::vector<int> newarray;
+	newarray.push_back(10);
+	newarray.push_back(70);
+	newarray.push_back(40);
+	newarray.push_back(50);
+	newarray.push_back(60);
+	newarray.push_back(20);
+	newarray.push_back(30);
+
+	//ArrayMaxHeap<int>* heap = new ArrayMaxHeap<int>(newarray, 7);
+	ArrayMaxHeap<int>* heap = new ArrayMaxHeap<int>();
+
+	//std::cout << heap->peekTop() << std::endl;
+	//heap->remove();
+	//std::cout << heap->peekTop() << std::endl;
+	std::vector<int> output;
+	output = heap->heapSort(newarray);
+	for (auto i : output)
+	{
+		std::cout << i << ", ";
+	}
+	std::cout << std::endl;
+	SDL_Delay(500000);
+	
 	// Arith
 	////	Arith tree test
 	cArith* atree = new cArith();
