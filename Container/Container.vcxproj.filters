@@ -25,6 +25,12 @@
     <Filter Include="Header Files\Heap">
       <UniqueIdentifier>{97ffbfbd-2511-4d6a-92e6-9a442196b15b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\IDList">
+      <UniqueIdentifier>{0255096b-e52b-434f-ab15-aa688a0041b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Dictionary">
+      <UniqueIdentifier>{73f90d4f-13b3-4495-8db8-de27b680f786}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SLinkedList.h">
@@ -74,6 +80,21 @@
     </ClInclude>
     <ClInclude Include="ArrayMaxHeap.h">
       <Filter>Header Files\Heap</Filter>
+    </ClInclude>
+    <ClInclude Include="TList.h">
+      <Filter>Header Files\IDList</Filter>
+    </ClInclude>
+    <ClInclude Include="Dictionary.h">
+      <Filter>Header Files\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="IntrusiveLinkedList.h">
+      <Filter>Header Files\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="DictionaryTree.h">
+      <Filter>Header Files\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="IBSTDictionary.h">
+      <Filter>Header Files\Dictionary</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

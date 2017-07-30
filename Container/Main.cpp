@@ -10,10 +10,47 @@
 #include "ArithExp.h"
 #include "BinaryTree.h"
 #include "ArrayMaxHeap.h"
+#include "IBSTDictionary.h"
 
 
 int main(int argc, char* args[])
 {	
+	//	Dictionary Tree
+	IBSTDict<int, std::string>* dict = new IBSTDict<int, std::string>();
+	//DictBST<int, std::string>* dict = new DictBST<int, std::string>();
+	dict->BSTInsert(10, "This is 10");
+	dict->BSTInsert(20, "This is 20");
+	dict->BSTInsert(80, "This is 80");
+	dict->BSTInsert(60, "This is 60");
+	dict->BSTInsert(30, "This is 30");
+	dict->BSTInsert(70, "This is 70");
+	dict->BSTInsert(40, "This is 40");
+	dict->BSTInsert(50, "This is 50");
+
+	dict->inOrderDisplay();
+	std::cout << std::endl;
+	DictEntry<int, std::string>* target = dict->search(60);
+	std::cout << "30 found as: ";
+	target->displayItem();
+
+	SDL_Delay(500000);
+
+	
+	//	BST count numbers
+	BST<int>* test200 = new BST<int>();
+	test200->BSTInsert(40);
+	test200->BSTInsert(55);
+	test200->BSTInsert(50);
+	test200->BSTInsert(45);
+	test200->BSTInsert(53);
+	test200->BSTInsert(51);
+	test200->BSTInsert(35);
+	test200->BSTInsert(36);
+	test200->BSTInsert(38);
+
+	std::cout << test200->countNumber() << std::endl;
+	SDL_Delay(500000);
+	
 	//	Array Max Heap
 	std::vector<int> newarray;
 	newarray.push_back(10);

@@ -128,11 +128,16 @@
     <ClInclude Include="BinaryTreeNode.h" />
     <ClInclude Include="BTNode.h" />
     <ClInclude Include="BTNodeTree.h" />
+    <ClInclude Include="Dictionary.h" />
+    <ClInclude Include="DictionaryTree.h" />
     <ClInclude Include="DLinkedList.h" />
     <ClInclude Include="BTDicNode.h" />
+    <ClInclude Include="IBSTDictionary.h" />
     <ClInclude Include="HeapInterface.h" />
+    <ClInclude Include="IntrusiveLinkedList.h" />
     <ClInclude Include="SLinkedList.h" />
     <ClInclude Include="test.h" />
+    <ClInclude Include="TList.h" />
     <ClInclude Include="ULinkedList.h" />
   </ItemGroup>
   <ItemGroup>

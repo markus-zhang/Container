@@ -35,6 +35,7 @@ protected:
 	BTN<T>* removeValueHelper(const T& item, BTN<T>* root);
 
 	void levelDisplayHelper(BTN<T>* root);
+	int countNumberHelper(BTN<T>* root);
 
 public:
 	//	Constructor and Destructor
@@ -64,6 +65,12 @@ public:
 	BTN<T>* findPredecessor(const T& item);
 
 	void levelDisplay();
+	int countNumber();
+
+	BTN<T>* search(const T& item)
+	{
+		return searchValue(root, item);
+	}
 };
 
 //	Implementation
@@ -630,5 +637,19 @@ void BST<T>::levelDisplay()
 {
 	levelDisplayHelper(root);
 }
-#endif
 
+template<typename T>
+int BST<T>::countNumberHelper(BTN<T>* root)
+{
+	if (root == nullptr)
+		return 0;
+
+	return 1 + countNumberHelper(root->getLeftChild()) + countNumberHelper(root->getRightChild());
+}
+
+template<typename T>
+int BST<T>::countNumber()
+{
+	return countNumberHelper(root);
+}
+#endif
