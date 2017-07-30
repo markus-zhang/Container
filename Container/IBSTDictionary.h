@@ -11,9 +11,8 @@ public:
 	Key key;
 	DictEntry* leftChild;
 	DictEntry* rightChild;
-protected:
-	void setKey(const Key& k);
 public:
+	
 	DictEntry();
 	DictEntry(const Key& k, const Item& i);
 	DictEntry(const Key& k, const Item& i,
@@ -25,6 +24,7 @@ public:
 	DictEntry* getLeftChild();
 	DictEntry* getRightChild();
 	void setItem(const Item& i);
+	void setKey(const Key& k);
 	void setLeftChild(DictEntry* left);
 	void setRightChild(DictEntry* right);
 
@@ -139,6 +139,7 @@ private:
 	int totalNumber;
 protected:
 	void inOrderDisplayHelper(DictEntry<Key, Item>* root);
+	void levelDisplayHelper(DictEntry<Key, Item>* root);
 	DictEntry<Key, Item>* BSTInsertHelper(
 		DictEntry<Key, Item>* root, const Key& k, const Item& i);
 	int getHeightHelper(DictEntry<Key, Item>* root);
@@ -160,11 +161,13 @@ public:
 	IBSTDict(Key k, Item i);
 
 	void inOrderDisplay();
+	void levelDisplay();
 	void BSTInsert(const Key& k, const Item& i);
 	int getHeight();
 	DictEntry<Key, Item>* search(const Key& k);
 	DictEntry<Key, Item>* findPredecessor(const Key& k);
 	DictEntry<Key, Item>* findSuccessor(const Key& k);
+	void remove(const Key& k);
 };
 
 template<typename Key, typename Item>
@@ -186,6 +189,52 @@ void IBSTDict<Key, Item>::inOrderDisplayHelper(DictEntry<Key, Item>* root)
 	//	Must have a displayItem() method for the item
 	root->displayItem();
 	inOrderDisplayHelper(root->getRightChild());
+}
+
+template<typename Key, typename Item>
+void IBSTDict<Key, Item>::levelDisplayHelper(DictEntry<Key, Item>* root)
+{
+	if (root == nullptr)
+		return;
+
+	int height = getHeight();
+	std::list<DictEntry<Key, Item>*> ls;
+	ls.push_back(root);
+	std::cout << root->getKey() << std::endl;
+
+	while (1)
+	{
+		int size = ls.size();
+		while (size > 0)
+		{
+			DictEntry<Key, Item>* left = ls.front()->getLeftChild();
+			DictEntry<Key, Item>* right = ls.front()->getRightChild();
+			if (left != nullptr)
+			{
+				ls.push_back(left);
+			}
+			if (right != nullptr)
+			{
+				ls.push_back(right);
+			}
+			ls.pop_front();
+			size -= 1;
+		}
+		if (ls.empty())
+			break;
+		//	Display
+		for (auto ptr : ls)
+		{
+			std::cout << ptr->getKey() << " ";
+		}
+		std::cout << std::endl;
+	}
+}
+
+template<typename Key, typename Item>
+void IBSTDict<Key, Item>::levelDisplay()
+{
+	levelDisplayHelper(root);
 }
 
 template<typename Key, typename Item>
@@ -236,7 +285,7 @@ int IBSTDict<Key, Item>::getHeightHelper(DictEntry<Key, Item>* root)
 		return 0;
 	else
 	{
-		return 1 + max(getHeightHelper(root->getLeftChild()),
+		return 1 + std::max(getHeightHelper(root->getLeftChild()),
 			getHeightHelper(root->getLeftChild()));
 	}
 }
@@ -302,20 +351,20 @@ DictEntry<Key, Item>* IBSTDict<Key, Item>::findPreFromRoot(
 		//	Strategy: keep a pointer to the last node that
 		//		turns left
 		DictEntry<Key, Item>* pre = nullptr;
-		while (node != nullptr)
+		while (root != nullptr)
 		{
-			if (k > node->getKey())
+			if (k > root->getKey())
 			{
 				//	We save the parent before going left
 				//	in case that the right child of the parent
 				//	contains the item
-				pre = node;
-				node = node->getRightChild();
+				pre = root;
+				root = root->getRightChild();
 			}
-			else if (k < node->getKey())
+			else if (k < root->getKey())
 			{
 				//	No need to save the node
-				node = node->getLeftChild();
+				root = root->getLeftChild();
 			}
 			else
 			{
@@ -358,7 +407,7 @@ DictEntry<Key, Item>* IBSTDict<Key, Item>::findSuccFromRoot(DictEntry<Key, Item>
 		DictEntry<Key, Item>* succ = nullptr;
 		while (root != nullptr)
 		{
-			if (item < root->getKey())
+			if (k < root->getKey())
 			{
 				//	We save the parent before going left
 				//	in case that the left child of the parent
@@ -366,7 +415,7 @@ DictEntry<Key, Item>* IBSTDict<Key, Item>::findSuccFromRoot(DictEntry<Key, Item>
 				succ = root;
 				root = root->getLeftChild();
 			}
-			else if (item > root->getKey())
+			else if (k > root->getKey())
 			{
 				//	No need to save the node
 				root = root->getRightChild();
@@ -430,7 +479,7 @@ DictEntry<Key, Item>* IBSTDict<Key, Item>::findSuccessorHelper(
 		std::cout << "Go Right" << std::endl;
 		//	Now goes right
 		DictEntry<Key, Item>* right = target->getRightChild();
-		while (left->getLeftChild())
+		while (right->getLeftChild())
 		{
 			std::cout << "Turn Left" << std::endl;
 			right = right->getLeftChild();
@@ -449,13 +498,33 @@ DictEntry<Key, Item>* IBSTDict<Key, Item>::findSuccessorHelper(
 template<typename Key, typename Item>
 DictEntry<Key, Item>* IBSTDict<Key, Item>::findPredecessor(const Key& k)
 {
-	return findPredecessorHelper(root, k);
+	//	Locate item
+	DictEntry<Key, Item>* node = search(k);
+	if (node == nullptr)
+	{
+		return nullptr;
+	}
+	else
+	{
+		std::cout << "Found as: " << node->getItem() << std::endl;
+		return findPredecessorHelper(node);
+	}
 }
 
 template<typename Key, typename Item>
 DictEntry<Key, Item>* IBSTDict<Key, Item>::findSuccessor(const Key& k)
 {
-	return findSuccessorHelper(root, k);
+	//	Locate item
+	DictEntry<Key, Item>* node = search(k);
+	if (node == nullptr)
+	{
+		return nullptr;
+	}
+	else
+	{
+		std::cout << "Found as: " << node->getItem() << std::endl;
+		return findSuccessorHelper(node);
+	}
 }
 
 template<typename Key, typename Item>
@@ -482,8 +551,30 @@ DictEntry<Key, Item>* IBSTDict<Key, Item>::removeHelper(
 			return root->getLeftChild();
 
 		//	Two-children nodes
-		DictEntry<Key, Item>* pre =
+		DictEntry<Key, Item>* pre = findPredecessor(k);
+		DictEntry<Key, Item>* succ = findSuccessor(k);
+
+		if (pre != nullptr)
+		{
+			root->setKey(pre->getKey());
+			root->setItem(pre->getItem());
+			root->setLeftChild(removeHelper(pre->getKey(), root->getLeftChild()));
+			return root;
+		}
+		if (succ != nullptr)
+		{
+			root->setKey(succ->getKey());
+			root->setItem(succ->getItem());
+			root->setRightChild(removeHelper(succ->getKey(), root->getRightChild()));
+			return root;
+		}
 	}
+}
+
+template<typename Key, typename Item>
+void IBSTDict<Key, Item>::remove(const Key& k)
+{
+	root = removeHelper(k, root);
 }
 
 #endif

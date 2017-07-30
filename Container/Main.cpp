@@ -27,11 +27,10 @@ int main(int argc, char* args[])
 	dict->BSTInsert(40, "This is 40");
 	dict->BSTInsert(50, "This is 50");
 
-	dict->inOrderDisplay();
+	dict->levelDisplay();
 	std::cout << std::endl;
-	DictEntry<int, std::string>* target = dict->search(60);
-	std::cout << "30 found as: ";
-	target->displayItem();
+	dict->remove(60);
+	dict->levelDisplay();
 
 	SDL_Delay(500000);
 
