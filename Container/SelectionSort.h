@@ -7,7 +7,7 @@
 #include <ctime>
 #include <numeric>
 
-static unsigned int MAX = 50;
+static unsigned int MAX = -1;
 
 template<typename T>
 class VectorWrapper
@@ -26,6 +26,7 @@ protected:
 	void MergeCreate(int begin, int mid, int end);
 	void RecursiveInsert(std::vector<T>& ouput,
 		int index1, int index1_end, int index2, int index2_end);
+	void QuickSortHelper(std::vector<T>& input, int begin, int end);
 public:
 	int Partition(std::vector<T>& input, int begin, int end);
 public:
@@ -46,6 +47,7 @@ public:
 	void InsertionSort();
 	void ShellSort();
 	void MergeSort();
+	void QuickSort();
 };
 
 template<typename T>
@@ -416,56 +418,92 @@ template<typename T>
 int VectorWrapper<T>::Partition(std::vector<T>& input, int begin, int end)
 {
 	//	Debug
-	for (auto i : input)
+	/*for (auto i : input)
 	{
 		std::cout << i << ", ";
-	}
+	}*/
 	
 	//	Small arrays are sorted by insertion sort, no need to worry
 	//	You need to implement insertion sort in QuickSort()
 
-	float average = std::accumulate(input.begin(), input.end(), 0) / input.size();
-	int walker1 = begin;
+	int pivot = bag[begin];	//	Pivot as the first element
+	int walker1 = begin + 1;
 	int walker2 = end;
 
 	while (1)
 	{
 		//	STOPPING criteria
-		if (walker1 >= walker2)
+		if (walker1 > walker2)
 		{
+			//	Exchange pivot with walker2
+			bag[begin] = bag[walker2];
+			bag[walker2] = pivot;
 			//	Debug
-			std::cout << "Average is: " << average << std::endl;
+			/*std::cout << "Average is: " << pivot << std::endl;
 			for (auto i : input)
 			{
 				std::cout << i << ", ";
-			}
-			return walker1 - 1;	//	return what?
+			}*/
+			return walker2;
 		}
 
 		//	Walking
-		if (bag[walker1] > average)
+		if (bag[walker1] > pivot)
 		{
-			if (bag[walker2] < average)
+			if (bag[walker2] <= pivot)
 			{
 				//	Make exchange only when both are satisfied
 				T temp = bag[walker1];
 				bag[walker1] = bag[walker2];
 				bag[walker2] = temp;
-				walker2 -= 1;
-				walker1 += 1;
-			}
-		}
-		else
-		{
-			if (bag[walker2] < average)
-			{
+				//walker2 -= 1;
 				walker1 += 1;
 			}
 			walker2 -= 1;
 		}
+		else
+		{
+			if (bag[walker2] > pivot)
+			{
+				//	walker2 moves
+				walker2 -= 1;
+			}
+			//	walker1 moves anyway
+			//	walker2 waits for exchange
+			walker1 += 1;
+		}
 	}
+}
 
-	
+template<typename T>
+void VectorWrapper<T>::QuickSortHelper(std::vector<T>& input, int begin, int end)
+{
+	if (begin < end)
+	{
+		int pivot = Partition(input, begin, end);
+		//std::cout << "Begin: " << begin << ", " << "Pivot: " << pivot << ", " << "End: " << end << std::endl;
+		
+		QuickSortHelper(input, begin, pivot - 1);
+		QuickSortHelper(input, pivot + 1, end);
+	}
+}
+
+template<typename T>
+void VectorWrapper<T>::QuickSort()
+{
+	QuickSortHelper(bag, 0, bag.size() - 1);
+	for (auto i = 5000; i <= 5049; i++)
+	{
+		std::cout << bag[i] << ", ";
+	}
+	std::cout << std::endl;
+	/*int count = 0;
+	for (auto i : bag)
+	{
+		if (i == bag[5005])
+			count += 1;
+	}
+	std::cout << bag[5005] << " has " << count << std::endl;*/
 }
 
 #endif
