@@ -11,10 +11,24 @@
 #include "BinaryTree.h"
 #include "ArrayMaxHeap.h"
 #include "IBSTDictionary.h"
+#include "SelectionSort.h"
 
 
 int main(int argc, char* args[])
 {	
+	//	Selection Sort
+	VectorWrapper<int> vw(10);
+	int start_s = clock();
+	//vw.SelectionSort();
+	//vw.InsertionSort();
+	//vw.ShellSort();
+	//vw.MergeSort();
+	int yes = vw.Partition(vw.GetVector(), 0, 9);
+	int stop_s = clock();
+	std::cout << "time: " << (stop_s - start_s) / double(CLOCKS_PER_SEC) * 1000 << std::endl;
+
+	SDL_Delay(500000);
+
 	//	Dictionary Tree
 	IBSTDict<int, std::string>* dict = new IBSTDict<int, std::string>();
 	//DictBST<int, std::string>* dict = new DictBST<int, std::string>();

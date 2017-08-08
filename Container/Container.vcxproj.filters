@@ -31,6 +31,18 @@
     <Filter Include="Header Files\Dictionary">
       <UniqueIdentifier>{73f90d4f-13b3-4495-8db8-de27b680f786}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Dictionary">
+      <UniqueIdentifier>{a6330704-806d-4422-a59b-8cff5e1c3be1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\2-3 tree">
+      <UniqueIdentifier>{28c1007b-4e0e-413c-9d02-1e6c8c34a71a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sorting Algorithms">
+      <UniqueIdentifier>{6ff35386-bad2-47b7-a885-fd8abdd1817f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Experiment">
+      <UniqueIdentifier>{2d9234fd-9a33-473d-b8ec-57ceb622824a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SLinkedList.h">
@@ -96,6 +108,21 @@
     <ClInclude Include="IBSTDictionary.h">
       <Filter>Header Files\Dictionary</Filter>
     </ClInclude>
+    <ClInclude Include="HashedDictionary.h">
+      <Filter>Header Files\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="TriNode.h">
+      <Filter>Header Files\2-3 tree</Filter>
+    </ClInclude>
+    <ClInclude Include="TriTree.h">
+      <Filter>Header Files\2-3 tree</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectionSort.h">
+      <Filter>Header Files\Sorting Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLWindow.h">
+      <Filter>Header Files\Experiment</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -115,6 +142,9 @@
     </ClCompile>
     <ClCompile Include="ArithExp.cpp">
       <Filter>Source Files\Arithmetic Expression</Filter>
+    </ClCompile>
+    <ClCompile Include="HashedDictionary.cpp">
+      <Filter>Source Files\Dictionary</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
