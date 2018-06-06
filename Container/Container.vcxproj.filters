@@ -43,6 +43,15 @@
     <Filter Include="Header Files\Experiment">
       <UniqueIdentifier>{2d9234fd-9a33-473d-b8ec-57ceb622824a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game Scripting Master">
+      <UniqueIdentifier>{33b9556f-f93e-4ee1-bbf2-bb5f23f490f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game Scripting Master\lib">
+      <UniqueIdentifier>{13da32b3-6a8f-4d4b-91d7-ecec3d2d2d81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Binary Tree Second Implementation">
+      <UniqueIdentifier>{6f0ebb4d-7eba-4f42-bc0d-2f2cfd3501df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SLinkedList.h">
@@ -122,6 +131,12 @@
     </ClInclude>
     <ClInclude Include="SDLWindow.h">
       <Filter>Header Files\Experiment</Filter>
+    </ClInclude>
+    <ClInclude Include="BTNodeSecond.h">
+      <Filter>Header Files\Binary Tree Second Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="BTSecond.h">
+      <Filter>Header Files\Binary Tree Second Implementation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

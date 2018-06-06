@@ -127,7 +127,9 @@
     <ClInclude Include="BinaryTreeInterface.h" />
     <ClInclude Include="BinaryTreeNode.h" />
     <ClInclude Include="BTNode.h" />
+    <ClInclude Include="BTNodeSecond.h" />
     <ClInclude Include="BTNodeTree.h" />
+    <ClInclude Include="BTSecond.h" />
     <ClInclude Include="Dictionary.h" />
     <ClInclude Include="DictionaryTree.h" />
     <ClInclude Include="DLinkedList.h" />
